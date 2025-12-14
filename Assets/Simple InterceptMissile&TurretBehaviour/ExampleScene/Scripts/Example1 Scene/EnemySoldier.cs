@@ -14,51 +14,129 @@ public class EnemySoldier : MonoBehaviour {
 	private Animator _animator;
 	private bool _isdead = false;
 	private int _animatorRunHash = Animator.StringToHash("Run");
+	private Manager _manager;
+
 
 	void Awake()
-	{	
-		if(Anchor)
-		{	
+	{
+		if (Anchor)
+		{
 			_bodyPartsRB = Anchor.GetComponentsInChildren<Rigidbody>();
 			_bodyPartsCollder = Anchor.GetComponentsInChildren<Collider>();
+
+			for (int i = 0; i < _bodyPartsRB.Length; i++)
+			{
+				if (_bodyPartsRB[i])
+					_bodyPartsRB[i].isKinematic = true;
+
+				if (_bodyPartsCollder[i])
+					_bodyPartsCollder[i].enabled = false;
+			}
 		}
-		
+		else
+		{
+			Debug.LogWarning("Anchor no asignado", this);
+		}
+
 		_animator = GetComponent<Animator>();
-	}
+        if (!_animator)
+        {
+            Debug.LogError("Animator no encontrado en EnemySoldier", this);
+        }
+    }
 
 	void Start()
 	{	
-		if(Anchor)
+		/*if(Anchor)
 		{	
 			for(int i = 0; i < _bodyPartsRB.Length; i ++)
 			{
 				_bodyPartsRB[i].isKinematic = true;
 				_bodyPartsCollder[i].enabled = false;
 			}		
+		}*/
+
+		if (!Agent)
+		{
+			Debug.LogError("NavMeshAgent no asignado", this);
+			return;
 		}
 
-		_waypoints = Manager.GetInstance().Waypoints1;
+		if (!Parachute)
+		{
+			Debug.LogError("Parachute no asignado", this);
+			return;
+		}
+
+		if (!Anchor)
+		{
+			Debug.LogWarning("Anchor no asignado", this);
+		}
+
+		if(Anchor && _bodyPartsRB != null && _bodyPartsCollder != null)
+		{
+			for(int i = 0; i < _bodyPartsRB.Length; i++)
+			{
+				if (_bodyPartsRB[i])
+					_bodyPartsRB[i].isKinematic = true;
+
+				if (_bodyPartsCollder[i])
+					_bodyPartsCollder[i].enabled = false;
+			}
+		}
+
+		_manager = Manager.GetInstance();
+		if (_manager == null)
+		{
+			Debug.LogError("Manager es NULL", this);
+			return;
+		}
+
+		//_waypoints = Manager.GetInstance().Waypoints1;
+		_waypoints = _manager.Waypoints1;
+
+		if (_waypoints == null || _waypoints.Length == 0)
+		{
+			Debug.LogError("Waypoints1 no está configurado", this);
+			return;
+		}
 		//Invoke("Dead", 1);
 		Invoke("Destroy", SoldierLifeTime);
 	}
 
 	void Update()
-	{	
-		if(Agent.enabled == true && Agent.speed > 0.1)
-			_animator.SetBool(_animatorRunHash, true);	
-		else if(Agent.speed < 0.1)
-			_animator.SetBool(_animatorRunHash, false);
-	
-		// Generate a new Quaternion representing the rotation we should have
-		Quaternion newRot = Quaternion.LookRotation (Agent.desiredVelocity);
-		// Smoothly rotate to that new rotation over time
-		transform.rotation = Quaternion.Slerp(transform.rotation, newRot, Time.deltaTime * 5.0f);
+	{
+        if (!Agent || !_manager || _waypoints == null || _waypoints.Length == 0) return;
+
+        if (_animator)
+		{
+			if (Agent.enabled == true && Agent.speed > 0.1)
+				_animator.SetBool(_animatorRunHash, true);
+			else if (Agent.speed < 0.1)
+				_animator.SetBool(_animatorRunHash, false);
+		}
+
+		if (Agent.desiredVelocity.sqrMagnitude > 0.01f)
+		{
+			// Generate a new Quaternion representing the rotation we should have
+			Quaternion newRot = Quaternion.LookRotation(Agent.desiredVelocity);
+			// Smoothly rotate to that new rotation over time
+			transform.rotation = Quaternion.Slerp(transform.rotation, newRot, Time.deltaTime * 5.0f);
+		}
 		
 		if(Agent.enabled == true)
 		{	
 			
 			if(Vector3.Distance(transform.position, _targetPoint) < Agent.stoppingDistance)
 			{
+				_waypoints = _manager.Waypoints1;
+
+				if (_waypoints == null || _waypoints.Length == 0)
+				{
+					Debug.LogError("Waypoints1 no está configurado");
+					return;
+				}
+
 				RandomPoint(_waypoints[Random.Range(0, _waypoints.Length)].position, 2f, out _targetPoint);
 			}
 
