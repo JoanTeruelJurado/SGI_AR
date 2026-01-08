@@ -12,6 +12,10 @@ public class Gun : MonoBehaviour
     public AudioClip shootingAudioClip;
     public GameObject rayImpactPrefab;
 
+    public GameObject bulletPrefab;
+    public float bulletSpeed = 20f;
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -27,6 +31,7 @@ public class Gun : MonoBehaviour
     }
 
     public void Shoot() {
+        /*
         source.PlayOneShot(shootingAudioClip);
 
         Ray ray = new Ray(shootingPoint.position, shootingPoint.forward);
@@ -50,6 +55,17 @@ public class Gun : MonoBehaviour
        
 
         line.SetPosition(1, endPoint);
-        Destroy(line.gameObject, lineShowtimer);
+        Destroy(line.gameObject, lineShowtimer);*/
+
+        source.PlayOneShot(shootingAudioClip);
+
+        GameObject bullet = Instantiate(
+            bulletPrefab,
+            shootingPoint.position,
+            shootingPoint.rotation
+        );
+
+        Rigidbody rb = bullet.GetComponent<Rigidbody>();
+        rb.linearVelocity = shootingPoint.forward * bulletSpeed;
     }
 }
