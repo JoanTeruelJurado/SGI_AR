@@ -13,6 +13,9 @@ public class ChunkManager : MonoBehaviour
     private GameObject currentPreview;
     private Vector3Int lastPreviewGridPos = new Vector3Int(int.MinValue, int.MinValue, int.MinValue); // Invalid initial
 
+    private GameObject currentPreviewVoxel;
+    private Vector3Int currentPreviewGridPos = Vector3Int.zero;  // Invalid default
+
     public void AddVoxel(Vector3Int gridPos)
     {
         Vector3Int chunkCoord = new(
@@ -34,6 +37,42 @@ public class ChunkManager : MonoBehaviour
             chunks.Add(chunkCoord, chunk);
         }
         chunk.AddVoxel(localVoxel, voxelPrefab);
+    }
+
+    public void ShowVoxelPreview(Vector3Int gridPos) {
+        // If position hasn't changed, do nothing
+        if (gridPos == currentPreviewGridPos) return;
+
+        // Remove old preview if exists
+        if (currentPreviewVoxel != null)
+        {
+            Destroy(currentPreviewVoxel);
+            currentPreviewVoxel = null;
+        }
+
+        // Only show preview if position is valid (you can add more checks later, e.g., not occupied)
+        currentPreviewVoxel = Instantiate(voxelPreviewPrefab, WorldRoot);
+        currentPreviewVoxel.transform.localPosition = VoxelGrid.GridToLocal(gridPos);
+
+        currentPreviewGridPos = gridPos;
+    }
+
+    public void HideVoxelPreview() {
+        if (currentPreviewVoxel != null)
+        {
+            Destroy(currentPreviewVoxel);
+            currentPreviewVoxel = null;
+        }
+        currentPreviewGridPos = Vector3Int.zero;  // Reset
+    }
+
+    public void PlaceVoxelFromPreview() {
+        if (currentPreviewGridPos == Vector3Int.zero) return;  // No valid preview
+
+        AddVoxel(currentPreviewGridPos);
+
+        // Clean up preview immediately after placement
+        HideVoxelPreview();
     }
 
     public void PlaceVoxel(RaycastHit hit) {
