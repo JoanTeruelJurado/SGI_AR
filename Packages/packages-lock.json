@@ -37,7 +37,7 @@
     },
     "com.meta.xr.sdk.core": {
       "version": "83.0.0",
-      "depth": 0,
+      "depth": 1,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
@@ -63,7 +63,7 @@
     },
     "com.meta.xr.sdk.interaction.ovr": {
       "version": "83.0.0",
-      "depth": 0,
+      "depth": 1,
       "source": "registry",
       "dependencies": {
         "com.meta.xr.sdk.core": "83.0.0",

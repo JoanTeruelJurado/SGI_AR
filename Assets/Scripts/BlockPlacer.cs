@@ -4,15 +4,32 @@ using Oculus.VR;  // For OVRInput and OVRHand
 public class BlockPlacer : MonoBehaviour
 {
     public ChunkManager chunkManager;
-
+    
+    [Header("Laser Visuals")]
+    [SerializeField] private LineRenderer handLaser;  // ← Drag your LineRenderer here
     [SerializeField] private Transform rightHandPointerTransform;  // Drag the pointer pose transform here (see below)
-
     [SerializeField] private OVRHand rightOVRHand;  // Drag the OVRHand component from right hand
 
+    [Header("Settings")]
     public float pinchThreshold = 0.9f;     // How strong the pinch needs to be (0-1)
     public float rayReach = 10f;            // Max distance for pointing/placing
+    public float laserWidth = 0.008f;         // quite thin for immersion
+    public Color laserColorValid = new Color(0.0f, 0.7f, 1.0f, 0.9f);    // cyan-ish when hitting
+    public Color laserColorNoHit = new Color(0.4f, 0.4f, 0.4f, 0.6f);    // dim gray when no hit
 
     private bool wasPinchingLastFrame = false;
+
+    private void Awake() {
+        if (handLaser != null)
+        {
+            // Basic LineRenderer setup (do once)
+            handLaser.positionCount = 2;
+            handLaser.startWidth = laserWidth;
+            handLaser.endWidth = laserWidth * 0.6f;   // optional slight taper
+            handLaser.material = new Material(Shader.Find("Sprites/Default")); // simple unlit
+            handLaser.useWorldSpace = true;
+        }
+    }
 
     // Inside BlockPlacer.cs Update()
     private void Update()
@@ -34,24 +51,50 @@ public class BlockPlacer : MonoBehaviour
         wasPinchingLastFrame = isPinching;
     }
 
-    private void UpdatePreview()
+private void UpdatePreview()
     {
         Ray ray = new Ray(rightHandPointerTransform.position, rightHandPointerTransform.forward);
 
-        if (Physics.Raycast(ray, out RaycastHit hit, rayReach))
-        {
+        bool hitSomething = Physics.Raycast(ray, out RaycastHit hit, rayReach);
+
+        Vector3 endPosition;
+
+        if (hitSomething) {
+            endPosition = hit.point;
+
+            // Optional: little offset so laser stops just before surface
+            // endPosition = hit.point - ray.direction * 0.02f;
+
+            // Update preview (your existing logic)
             Vector3 localHitPoint = chunkManager.WorldRoot.InverseTransformPoint(hit.point);
             Vector3 localNormal = chunkManager.WorldRoot.InverseTransformDirection(hit.normal);
-
             Vector3Int hitVoxel = VoxelGrid.WorldToGrid(localHitPoint - localNormal * 0.01f);
             Vector3Int placePos = hitVoxel + Vector3Int.RoundToInt(localNormal);
 
-            chunkManager.ShowVoxelPreview(placePos);  // ← Shows/updates the ghost block
+            chunkManager.ShowVoxelPreview(placePos);
+
+            // Visual feedback → strong/clear color when valid placement surface
+            handLaser.startColor = laserColorValid;
+            handLaser.endColor = laserColorValid;
+        } else {
+            endPosition = ray.origin + ray.direction * rayReach;
+
+            chunkManager.HideVoxelPreview();
+
+            // Dimmer color when pointing at nothing
+            handLaser.startColor = laserColorNoHit;
+            handLaser.endColor = laserColorNoHit;
         }
-        else
-        {
-            chunkManager.HideVoxelPreview();  // ← Hides when no valid surface
-        }
+
+        // Update LineRenderer (always visible)
+        handLaser.SetPosition(0, ray.origin);
+        handLaser.SetPosition(1, endPosition);
+    }
+
+    private void OnDisable()
+    {
+        if (handLaser != null)
+            handLaser.enabled = false;
     }
 
     private void TryPlaceBlock()
@@ -73,45 +116,3 @@ public class BlockPlacer : MonoBehaviour
         }
     }
 }
-/*
-using UnityEngine;
-using UnityEngine.XR;
-using Unity.XR;
-using UnityEditor.XR;
-using UnityEngine.XR.Interaction.Toolkit;
-using Oculus.Interaction;
-
-public class BlockPlacer : MonoBehaviour
-{
-    public ChunkManager chunkManager;  // Assign your ChunkManager in Inspector
-    public GameObject voxelPrefab;     // Same as in ChunkManager
-
-    [SerializeField] private XRBaseController rightController;  // Assign right controller
-    [SerializeField] public OVRInput.RawButton PlacingButton;    // Grip or trigger
-
-    private void Awake()
-    {
-        // Example: Use trigger press to place (configure in Action-Based Controller)
-        if (OVRInput.GetDown(PlacingButton)) {
-            TryPlaceBlock();
-        }    
-    }
-
-    private void TryPlaceBlock()
-    {
-        if (rightController.TryGetComponent<UnityEngine.XR.Interaction.Toolkit.Interactors.XRRayInteractor>(out var rayInteractor))
-        {
-            if (rayInteractor.TryGetCurrent3DRaycastHit(out RaycastHit hit))
-            {
-                // Transform hit relative to WorldRoot (same as your code)
-                Vector3 localHitPoint = chunkManager.WorldRoot.InverseTransformPoint(hit.point);
-                Vector3 localNormal = chunkManager.WorldRoot.InverseTransformDirection(hit.normal);
-
-                Vector3Int hitVoxel = VoxelGrid.WorldToGrid(localHitPoint - localNormal * 0.01f);
-                Vector3Int placePos = hitVoxel + Vector3Int.RoundToInt(localNormal);
-
-                chunkManager.AddVoxel(placePos);
-            }
-        }
-    }
-}*/
