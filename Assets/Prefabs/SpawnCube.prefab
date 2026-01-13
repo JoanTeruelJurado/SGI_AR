@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5166837225617737627}
   - component: {fileID: 2924497666093764430}
   - component: {fileID: 1185385748735545988}
+  - component: {fileID: 9159534259474407613}
   m_Layer: 0
   m_Name: SpawnCube
   m_TagString: Untagged
@@ -111,3 +112,15 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &9159534259474407613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5604705026923120462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: faed6722bdaa27b4695d21518e3fc742, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CubeTarget
