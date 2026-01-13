@@ -103,6 +103,7 @@
     <Compile Include="Assets\Simple InterceptMissile&amp;TurretBehaviour\Scripts\EffectsScipts\SmokeDirection.cs" />
     <Compile Include="Assets\Simple InterceptMissile&amp;TurretBehaviour\ExampleScene\Scripts\Example1 Scene\EnemyTankManager.cs" />
     <Compile Include="Assets\Scripts\ChunkManager.cs" />
+    <Compile Include="Assets\Scripts\CubeSpawner.cs" />
     <Compile Include="Assets\Scripts\ARTapToPlace.cs" />
     <Compile Include="Assets\Simple InterceptMissile&amp;TurretBehaviour\NavMeshComponents\Scripts\NavMeshModifier.cs" />
     <Compile Include="Assets\Simple InterceptMissile&amp;TurretBehaviour\ExampleScene\Scripts\Example Scene\SelfDestroy.cs" />
