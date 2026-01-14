@@ -11,8 +11,28 @@ public class PalmMenuController : MonoBehaviour
 
     void Start()
     {
+        //var xrManager = XRGeneralSettings.Instance.Manager;
+        //handSubsystem = xrManager.activeLoader.GetLoadedSubsystem<XRHandSubsystem>();
+        if (XRGeneralSettings.Instance == null)
+        {
+            Debug.Log("XR no inicializado (Editor sin visor)");
+            return;
+        }
+
         var xrManager = XRGeneralSettings.Instance.Manager;
+
+        if (xrManager == null || xrManager.activeLoader == null)
+        {
+            Debug.Log("XR Loader no activo (Editor sin Quest)");
+            return;
+        }
+
         handSubsystem = xrManager.activeLoader.GetLoadedSubsystem<XRHandSubsystem>();
+
+        if (handSubsystem == null)
+        {
+            Debug.Log("Hand Tracking no disponible");
+        }
     }
 
     void Update()
