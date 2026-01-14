@@ -17,7 +17,8 @@ public class Gun : MonoBehaviour
     public float pinchThreshold = 0.9f;
     
     private bool wasPinchingLastFrame = false;
-
+    public float timeBetweenShots = 0.5f;
+    private float lastShotTime = -Mathf.Infinity;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -32,10 +33,11 @@ public class Gun : MonoBehaviour
         bool isPinching = pinchStrength > pinchThreshold;
 
         // Place only when pinch starts
-        if (isPinching && !wasPinchingLastFrame)
+        if (isPinching && !wasPinchingLastFrame && Time.time - lastShotTime >= timeBetweenShots)
         {
             Debug.Log("Shoot block");
             Shoot();
+            lastShotTime = Time.time;
         }  
     }
 

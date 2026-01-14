@@ -63,7 +63,11 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\GameController.cs" />
     <Compile Include="Assets\Simple InterceptMissile&amp;TurretBehaviour\Scripts\PoolingManager\PoolObject.cs" />
+    <Compile Include="Assets\Scripts\RadialMenu.cs" />
+    <Compile Include="Assets\Scripts\PlaceObject.cs" />
     <Compile Include="Assets\Scripts\Gun.cs" />
+    <Compile Include="Assets\Scripts\Block.cs" />
+    <Compile Include="Assets\Scripts\PlacementModeController.cs" />
     <Compile Include="Assets\Simple InterceptMissile&amp;TurretBehaviour\ExampleScene\Scripts\Example1 Scene\MachineGunController.cs" />
     <Compile Include="Assets\Scripts\Radial_Selection.cs" />
     <Compile Include="Assets\Scripts\GridManager.cs" />
@@ -75,6 +79,7 @@
     <Compile Include="Assets\Scripts\VoxelGrid.cs" />
     <Compile Include="Assets\Scripts\BlockPlacer.cs" />
     <Compile Include="Assets\Simple InterceptMissile&amp;TurretBehaviour\ExampleScene\Scripts\Example Scene\RadarRotation.cs" />
+    <Compile Include="Assets\Scripts\LeftHandPinchDetector.cs" />
     <Compile Include="Assets\Simple InterceptMissile&amp;TurretBehaviour\ExampleScene\Scripts\Example Scene\CameraController.cs" />
     <Compile Include="Assets\Scripts\WorldAnchorManager.cs" />
     <Compile Include="Assets\Simple InterceptMissile&amp;TurretBehaviour\ExampleScene\Scripts\Example1 Scene\EnemyPlaneManager.cs" />
@@ -83,6 +88,7 @@
     <Compile Include="Assets\Simple InterceptMissile&amp;TurretBehaviour\ExampleScene\Scripts\Example Scene\Missile.cs" />
     <Compile Include="Assets\Simple InterceptMissile&amp;TurretBehaviour\Scripts\InterceptMissile\InterceptMissileController.cs" />
     <Compile Include="Assets\Scripts\Chunk.cs" />
+    <Compile Include="Assets\Scripts\BlockPlacer_Minimal.cs" />
     <Compile Include="Assets\Simple InterceptMissile&amp;TurretBehaviour\ExampleScene\Scripts\Example1 Scene\Plane.cs" />
     <Compile Include="Assets\Scripts\ObjectSpawner.cs" />
     <Compile Include="Assets\Simple InterceptMissile&amp;TurretBehaviour\ExampleScene\Scripts\Example1 Scene\PropellerRotator.cs" />
@@ -91,6 +97,7 @@
     <Compile Include="Assets\Scripts\DeleteBlock.cs" />
     <Compile Include="Assets\Simple InterceptMissile&amp;TurretBehaviour\ExampleScene\Scripts\Example Scene\EnemyPlane.cs" />
     <Compile Include="Assets\Scripts\SnapToGrid.cs" />
+    <Compile Include="Assets\Scripts\PlacementMode.cs" />
     <Compile Include="Assets\Simple InterceptMissile&amp;TurretBehaviour\ExampleScene\Scripts\Example1 Scene\Tank.cs" />
     <Compile Include="Assets\Scripts\ToggleBlocksUI.cs" />
     <Compile Include="Assets\Simple InterceptMissile&amp;TurretBehaviour\ExampleScene\Scripts\Example1 Scene\ExplosionPhysicsForce.cs" />
@@ -98,6 +105,8 @@
     <Compile Include="Assets\Simple InterceptMissile&amp;TurretBehaviour\ExampleScene\Scripts\Example1 Scene\SmallProjectile.cs" />
     <Compile Include="Assets\Simple InterceptMissile&amp;TurretBehaviour\Scripts\AntiMissileGun\AntiMissileGunScanner.cs" />
     <Compile Include="Assets\Simple InterceptMissile&amp;TurretBehaviour\NavMeshComponents\Scripts\NavMeshModifierVolume.cs" />
+    <Compile Include="Assets\Scripts\TestBlockPlacer.cs" />
+    <Compile Include="Assets\Scripts\BlockPlacerVR.cs" />
     <Compile Include="Assets\Simple InterceptMissile&amp;TurretBehaviour\ExampleScene\Scripts\Example1 Scene\EnemySoldier.cs" />
     <Compile Include="Assets\Simple InterceptMissile&amp;TurretBehaviour\Scripts\AntiMissileGun\AntiMissileProjectile.cs" />
     <Compile Include="Assets\Simple InterceptMissile&amp;TurretBehaviour\Scripts\InterceptMissile\InterceptMissile.cs" />
@@ -114,6 +123,8 @@
     <Compile Include="Assets\Scripts\FreezeRotation.cs" />
     <Compile Include="Assets\Simple InterceptMissile&amp;TurretBehaviour\ExampleScene\Scripts\Example Scene\SelfDestroy.cs" />
     <Compile Include="Assets\Scripts\GunController.cs" />
+    <Compile Include="Assets\Scripts\GunRayShooter.cs" />
+    <Compile Include="Assets\Scripts\HandMenuController.cs" />
     <Compile Include="Assets\Scripts\BlockSpawner.cs" />
     <Compile Include="Assets\Simple InterceptMissile&amp;TurretBehaviour\NavMeshComponents\Scripts\NavMeshSurface.cs" />
     <Compile Include="Assets\Simple InterceptMissile&amp;TurretBehaviour\ExampleScene\Scripts\Example1 Scene\Manager.cs" />
@@ -121,6 +132,7 @@
     <Compile Include="Assets\Simple InterceptMissile&amp;TurretBehaviour\ExampleScene\Scripts\Example1 Scene\MediumProjectile.cs" />
     <Compile Include="Assets\Simple InterceptMissile&amp;TurretBehaviour\Scripts\AntiMissileGun\AntiMissileGunController.cs" />
     <Compile Include="Assets\Simple InterceptMissile&amp;TurretBehaviour\Scripts\PoolingManager\PoolManager.cs" />
+    <Compile Include="Assets\Scripts\BuildBlock.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
