@@ -1,9 +1,29 @@
 using UnityEngine;
+using UnityEngine.UI; 
 
 public class CubeSpawner : MonoBehaviour
 {
     public GameObject cubePrefab;
     public float spawnDistance = 0.5f;
+
+    [Header("UI")]
+    public Slider sizeSlider;  // Slider que controla el tamaño de los cubos
+
+    private float cubeSize = 0.1f; // Tamaño por defecto
+
+    void Start()
+    {
+        if (sizeSlider != null)
+        {
+            cubeSize = sizeSlider.value;
+            sizeSlider.onValueChanged.AddListener(UpdateCubeSize);
+        }
+    }
+
+    void UpdateCubeSize(float newSize)
+    {
+        cubeSize = newSize;
+    }
 
     public void SpawnCube(Color color)
     {
@@ -12,6 +32,10 @@ public class CubeSpawner : MonoBehaviour
 
         GameObject cube = Instantiate(cubePrefab, spawnPos, Quaternion.identity);
 
+        // Ajustar tamany
+        cube.transform.localScale = Vector3.one * cubeSize;
+
+        // Configurar color
         Renderer r = cube.GetComponent<Renderer>();
         if (r != null)
         {

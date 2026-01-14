@@ -7,6 +7,8 @@ public class GunSpawner : MonoBehaviour
 
     GameObject currentGun;
 
+    public bool IsGunActive = false;
+
     public void ToggleGun()
     {
         if (currentGun == null)
