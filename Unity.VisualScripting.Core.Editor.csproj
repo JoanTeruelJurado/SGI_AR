@@ -353,8 +353,8 @@
     <Compile Include="Library\PackageCache\com.unity.visualscripting@6279e2b7c485\Editor\VisualScripting.Core\Plugin\Acknowledgements\Acknowledgement_MD4.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@6279e2b7c485\Editor\VisualScripting.Core\Analysis\AnalyserAttribute.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@6279e2b7c485\Editor\VisualScripting.Core\Meta\IndexerMetadata.cs" />
-    <Compile Include="Library\PackageCache\com.unity.visualscripting@6279e2b7c485\Editor\VisualScripting.Core\Analytics\NodeUsageAnalytics.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@6279e2b7c485\Editor\VisualScripting.Core\Interface\LudiqGUIUtility.cs" />
+    <Compile Include="Library\PackageCache\com.unity.visualscripting@6279e2b7c485\Editor\VisualScripting.Core\Analytics\NodeUsageAnalytics.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@6279e2b7c485\Editor\VisualScripting.Core\Analysis\GraphElementAnalysis.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@6279e2b7c485\Editor\VisualScripting.Core\Inspection\InspectorImplementationOrderAttribute.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@6279e2b7c485\Editor\VisualScripting.Core\ResourceProviders\AssetBundleResourceProvider.cs" />

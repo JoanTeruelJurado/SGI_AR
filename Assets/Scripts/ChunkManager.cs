@@ -7,6 +7,7 @@ public class ChunkManager : MonoBehaviour
     public GameObject voxelPrefab;
     public GameObject voxelPreviewPrefab;
     public Transform WorldRoot;
+    public float currentVoxelSize { get; private set; } = 1f;  // ← this is what BlockPlacer uses for preview/snapping
     private Dictionary<Vector3Int, Chunk> chunks = new();
 
     // Preview management

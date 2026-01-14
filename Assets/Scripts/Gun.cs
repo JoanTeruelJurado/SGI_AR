@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using Oculus.VR;  // For OVRInput and OVRHand
 public class Gun : MonoBehaviour
 {
     public LayerMask layerMask;
@@ -11,9 +11,12 @@ public class Gun : MonoBehaviour
     public AudioSource source;
     public AudioClip shootingAudioClip;
     public GameObject rayImpactPrefab;
-
+     [SerializeField] private OVRHand leftOVRHand;  // Drag the OVRHand component from right hand
     public GameObject bulletPrefab;
     public float bulletSpeed = 20f;
+    public float pinchThreshold = 0.9f;
+    
+    private bool wasPinchingLastFrame = false;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -25,9 +28,15 @@ public class Gun : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (OVRInput.GetDown(shootingButton)) {
+        float pinchStrength = leftOVRHand.GetFingerPinchStrength(OVRHand.HandFinger.Index);
+        bool isPinching = pinchStrength > pinchThreshold;
+
+        // Place only when pinch starts
+        if (isPinching && !wasPinchingLastFrame)
+        {
+            Debug.Log("Shoot block");
             Shoot();
-        }    
+        }  
     }
 
     public void Shoot() {
